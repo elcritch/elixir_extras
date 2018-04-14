@@ -5,11 +5,11 @@ defmodule ElixirExtras.Fold do
 
   ## Examples
 
-  iex> import ElixirExtras.Fold; fold0 {num, acc} <~ [1,2,3] do num + acc end
+  iex> import ElixirExtras.Fold; foldA {num, acc} <~ [1,2,3] do num + acc end
   6
 
   """
-  defmacro fold0({:<~, _line, [{val, acc}, values]} , do: expression) do
+  defmacro foldA({:<~, _line, [{val, acc}, values]} , do: expression) do
     quote do
       Enum.reduce(unquote(values), fn unquote(val), unquote(acc) -> unquote(expression) end)
     end
@@ -20,11 +20,11 @@ defmodule ElixirExtras.Fold do
 
   ## Examples
 
-  iex> import ElixirExtras.Fold; fold0 {num, acc} <~ [1,2,3], init: 100 do num + acc end
+  iex> import ElixirExtras.Fold; foldA {num, acc} <~ [1,2,3], init: 100 do num + acc end
   106
 
   """
-  defmacro fold0({:<~, _line, [{val, acc}, values]}, [init: init], do: expression) do
+  defmacro foldA({:<~, _line, [{val, acc}, values]}, [init: init], do: expression) do
     quote do
       Enum.reduce(unquote(values), unquote(init), fn unquote(val), unquote(acc) -> unquote(expression) end)
     end
@@ -35,11 +35,11 @@ defmodule ElixirExtras.Fold do
 
   ## Examples
 
-  iex> import ElixirExtras.Fold; fold1 {num, acc} <- [1,2,3], init: 100 do num + acc end
+  iex> import ElixirExtras.Fold; foldB {num, acc} <- [1,2,3], init: 100 do num + acc end
   106
 
   """
-  defmacro fold1({:<-, _line, [{val, acc}, values]}, do: expression) do
+  defmacro foldB({:<-, _line, [{val, acc}, values]}, do: expression) do
     quote do
       Enum.reduce(unquote(values), fn unquote(val), unquote(acc) -> unquote(expression) end)
     end
@@ -50,11 +50,11 @@ defmodule ElixirExtras.Fold do
 
   ## Examples
 
-  iex> import ElixirExtras.Fold; fold1 {num, acc} <- [1,2,3], init: 100 do num + acc end
+  iex> import ElixirExtras.Fold; foldB {num, acc} <- [1,2,3], init: 100 do num + acc end
   106
 
   """
-  defmacro fold1({:<-, _line, [{val, acc}, values]}, [init: init], do: expression) do
+  defmacro foldB({:<-, _line, [{val, acc}, values]}, [init: init], do: expression) do
     quote do
       Enum.reduce(unquote(values), unquote(init), fn unquote(val), unquote(acc) -> unquote(expression) end)
     end
