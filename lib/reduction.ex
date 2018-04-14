@@ -1,23 +1,5 @@
 
 # iex(29)> fold {val, acc} <~ [1,2,3], init: 100 do num + acc end
-# clause: {:<~, [line: 29],
-#  [{{:val, [line: 29], nil}, {:acc, [line: 29], nil}}, [1, 2, 3]]}
-# clause3: [init: 100]
-# expression: {:+, [line: 29], [{:num, [line: 29], nil}, {:acc, [line: 29], nil}]}
-# ** (CompileError) iex:29: undefined function num/0
-#     (stdlib) lists.erl:1354: :lists.mapfoldl/3
-#     expanding macro: Extras.Fold.fold/3
-#     iex:29: (file)
-# iex(29)> fold {val, acc} <~ [1,2,3], init: 100 do num + acc end
-# clause: {:<~, [line: 29],
-#  [{{:val, [line: 29], nil}, {:acc, [line: 29], nil}}, [1, 2, 3]]}
-# clause3: [init: 100]
-# expression: {:+, [line: 29], [{:num, [line: 29], nil}, {:acc, [line: 29], nil}]}
-# ** (CompileError) iex:29: undefined function num/0
-#     (stdlib) lists.erl:1354: :lists.mapfoldl/3
-#     expanding macro: Extras.Fold.fold/3
-#     iex:29: (file)
-
 defmodule ElixirExtras.Fold do
 
   @doc """
@@ -25,19 +7,16 @@ defmodule ElixirExtras.Fold do
 
   ## Examples
 
-  iex> import ElixirExtras.Fold; fold {val, acc} <~ [1,2,3] do num + acc end
+  iex> import ElixirExtras.Fold; fold {num, acc} <~ [1,2,3] do num + acc end
   6
 
   """
-  defmacro fold(clause, clause3, do: expression) do
-    IO.inspect clause, label: :clause
-    IO.inspect clause3, label: :clause3
-    IO.inspect expression, label: :expression
+  defmacro fold(clause, do: expression) do
+
+    {:<~, _line, [{val, acc}, values]} = clause
 
     quote do
-      # Enum.reduce(
-        # unquote(expression)
-      # )
+      Enum.reduce(unquote(values), fn unquote(val), unquote(acc) -> unquote(expression) end)
     end
   end
 
@@ -46,19 +25,22 @@ defmodule ElixirExtras.Fold do
 
   ## Examples
 
-  iex> import ElixirExtras.Fold; fold {val, acc} <~ [1,2,3], init: 100 do num + acc end
+  iex> import ElixirExtras.Fold; fold {num, acc} <~ [1,2,3], init: 100 do num + acc end
   106
 
   """
-  defmacro fold(clause, do: expression) do
-    IO.inspect clause, label: :clause
-    IO.inspect expression, label: :expression
+  defmacro fold(clause, init_expr, do: expression) do
+    # IO.inspect clause, label: :clause
+    # IO.inspect clause3, label: :clause3
+    # IO.inspect expression, label: :expression
+
+    {:<~, _line, [{val, acc}, values]} = clause
+    [init: init] = init_expr
 
     quote do
-      # Enum.reduce(
-        # unquote(expression)
-      # )
+      Enum.reduce(unquote(values), unquote(init), fn unquote(val), unquote(acc) -> unquote(expression) end)
     end
   end
+
 end
 
