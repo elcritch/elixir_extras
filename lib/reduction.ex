@@ -1,5 +1,3 @@
-
-# iex(29)> fold {val, acc} <~ [1,2,3], init: 100 do num + acc end
 defmodule ElixirExtras.Fold do
 
   @doc """
@@ -30,10 +28,6 @@ defmodule ElixirExtras.Fold do
 
   """
   defmacro fold(clause, init_expr, do: expression) do
-    # IO.inspect clause, label: :clause
-    # IO.inspect clause3, label: :clause3
-    # IO.inspect expression, label: :expression
-
     {:<~, _line, [{val, acc}, values]} = clause
     [init: init] = init_expr
 
@@ -41,6 +35,4 @@ defmodule ElixirExtras.Fold do
       Enum.reduce(unquote(values), unquote(init), fn unquote(val), unquote(acc) -> unquote(expression) end)
     end
   end
-
 end
-
