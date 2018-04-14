@@ -10,7 +10,6 @@ defmodule ElixirExtras.Fold do
 
   """
   defmacro fold(clause, do: expression) do
-
     {:<~, _line, [{val, acc}, values]} = clause
 
     quote do
