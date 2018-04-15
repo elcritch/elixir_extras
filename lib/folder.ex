@@ -1,5 +1,4 @@
 defmodule ElixirExtras.Fold do
-
   @doc """
   Elixir Fold Comprehension.
 
@@ -9,9 +8,11 @@ defmodule ElixirExtras.Fold do
   6
 
   """
-  defmacro foldA({:<~, _line, [{val, acc}, values]} , do: expression) do
+  defmacro foldA({:<~, _line, [{val, acc}, values]}, do: expression) do
     quote do
-      Enum.reduce(unquote(values), fn unquote(val), unquote(acc) -> unquote(expression) end)
+      Enum.reduce(unquote(values), fn unquote(val), unquote(acc) ->
+        unquote(expression)
+      end)
     end
   end
 
@@ -26,7 +27,9 @@ defmodule ElixirExtras.Fold do
   """
   defmacro foldA({:<~, _line, [{val, acc}, values]}, [init: init], do: expression) do
     quote do
-      Enum.reduce(unquote(values), unquote(init), fn unquote(val), unquote(acc) -> unquote(expression) end)
+      Enum.reduce(unquote(values), unquote(init), fn unquote(val), unquote(acc) ->
+        unquote(expression)
+      end)
     end
   end
 
@@ -41,7 +44,9 @@ defmodule ElixirExtras.Fold do
   """
   defmacro foldB({:<-, _line, [{val, acc}, values]}, do: expression) do
     quote do
-      Enum.reduce(unquote(values), fn unquote(val), unquote(acc) -> unquote(expression) end)
+      Enum.reduce(unquote(values), fn unquote(val), unquote(acc) ->
+        unquote(expression)
+      end)
     end
   end
 
@@ -56,8 +61,9 @@ defmodule ElixirExtras.Fold do
   """
   defmacro foldB({:<-, _line, [{val, acc}, values]}, [init: init], do: expression) do
     quote do
-      Enum.reduce(unquote(values), unquote(init), fn unquote(val), unquote(acc) -> unquote(expression) end)
+      Enum.reduce(unquote(values), unquote(init), fn unquote(val), unquote(acc) ->
+        unquote(expression)
+      end)
     end
   end
-
 end

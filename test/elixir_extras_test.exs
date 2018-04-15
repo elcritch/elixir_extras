@@ -4,6 +4,6 @@ defmodule ElixirExtrasTest do
   doctest ElixirExtras.Fold
 
   # test "greets the world" do
-    # assert ElixirExtras.hello() == :world
+  # assert ElixirExtras.hello() == :world
   # end
 end
