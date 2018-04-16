@@ -3,7 +3,12 @@ defmodule ElixirExtrasTest do
   doctest ElixirExtras
   doctest ElixirExtras.Fold
 
-  # test "greets the world" do
-  # assert ElixirExtras.hello() == :world
-  # end
+  use ElixirExtras
+
+  test "greets the world" do
+
+    res = fold {num, acc} <~ [1,2,3] do num + acc end
+
+    assert 6 == res
+  end
 end

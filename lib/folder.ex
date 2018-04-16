@@ -4,11 +4,11 @@ defmodule ElixirExtras.Fold do
 
   ## Examples
 
-  iex> import ElixirExtras.Fold; foldA {num, acc} <~ [1,2,3] do num + acc end
+  iex> import ElixirExtras.Fold; fold {num, acc} <~ [1,2,3] do num + acc end
   6
 
   """
-  defmacro foldA({:<~, _line, [{val, acc}, values]}, do: expression) do
+  defmacro fold({:<~, _line, [{val, acc}, values]}, do: expression) do
     quote do
       Enum.reduce(unquote(values), fn unquote(val), unquote(acc) ->
         unquote(expression)
@@ -21,11 +21,11 @@ defmodule ElixirExtras.Fold do
 
   ## Examples
 
-  iex> import ElixirExtras.Fold; foldA {num, acc} <~ [1,2,3], init: 100 do num + acc end
+  iex> import ElixirExtras.Fold; fold {num, acc} <~ [1,2,3], init: 100 do num + acc end
   106
 
   """
-  defmacro foldA({:<~, _line, [{val, acc}, values]}, [init: init], do: expression) do
+  defmacro fold({:<~, _line, [{val, acc}, values]}, [init: init], do: expression) do
     quote do
       Enum.reduce(unquote(values), unquote(init), fn unquote(val), unquote(acc) ->
         unquote(expression)

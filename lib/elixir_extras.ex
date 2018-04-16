@@ -1,18 +1,13 @@
 defmodule ElixirExtras do
   @moduledoc """
-  Documentation for ElixirExtras.
+  Extra's for Elixir. 
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> ElixirExtras.hello
-      :world
-
-  """
-  def hello do
-    :world
+  defmacro __using__(_) do
+    quote do
+      import ShorterMaps
+      import ElixirExtras.Fold
+    end
   end
+
 end
