@@ -11,4 +11,15 @@ defmodule ElixirExtrasTest do
 
     assert 6 == res
   end
+
+  test "rebind in place" do
+
+    import ElixirExtras.Rebind
+
+    a = %{id: 0}
+
+    a <<~ [id: 23]
+
+    assert %{id: 23} == a
+  end
 end
